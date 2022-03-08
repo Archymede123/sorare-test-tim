@@ -5,7 +5,6 @@ import { ICard } from "../types";
 const CardLayout = styled.div`
   position: relative;
   border-radius: 1rem;
-  background: rgb(34, 193, 195);
   background: linear-gradient(
     0deg,
     rgba(34, 193, 195, 1) 0%,
@@ -59,10 +58,19 @@ const CardLayout = styled.div`
 `;
 
 type TCardProps = {
-  card: ICard;
+  card: ICard | null;
 };
 
 const Card = ({ card }: TCardProps) => {
+  if (!card)
+    return (
+      <p
+        className="placeholderLabel"
+        style={{ transform: "translateX(50%)", width: "50%" }}
+      >
+        ERROR : Could not find player associated to this slug
+      </p>
+    );
   return (
     <CardLayout key={card.id}>
       <div className="cardContent">
