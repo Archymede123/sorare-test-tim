@@ -2,12 +2,12 @@ import type { NextPage } from "next";
 import gql from "graphql-tag";
 import { useGQLQuery } from "../../hooks/useGQLQuery";
 import { useRouter } from "next/router";
-import { ICard } from "../../types";
 import styled from "styled-components";
 import Card from "../../components/card";
 import { useState } from "react";
 import Zoom from "@mui/material/Zoom";
 import Grow from "@mui/material/Grow";
+import Button from "../../components/button";
 
 const CardsLayout = styled.div`
   display: flex;
@@ -44,28 +44,6 @@ const CardsLayout = styled.div`
     transform: translate(-50%, -50%);
     text-align: center;
   }
-
-  button {
-    background: linear-gradient(
-      90deg,
-      rgba(131, 58, 180, 1) 0%,
-      rgba(253, 29, 29, 1) 50%,
-      rgba(252, 176, 69, 1) 100%
-    );
-    border: none;
-    padding: 1rem 3rem;
-    font-size: 1.5rem;
-    color: white;
-    border-radius: 100px;
-    width: 500px;
-    margin: 0 auto;
-    cursor: pointer;
-    transition: box-shadow 0.5s ease-in-out;
-
-    &:hover {
-      box-shadow: 0px 0px 10px #000000a9;
-    }
-  }
 `;
 
 const GET_CARDS = gql`
@@ -92,7 +70,7 @@ const GET_CARDS = gql`
 const CardsPage: NextPage = () => {
   const [dataFetched, setDataFetched] = useState<boolean>(false);
   const { query } = useRouter();
-  const { data } = useGQLQuery(
+  const { data, isLoading } = useGQLQuery(
     "cards",
     GET_CARDS,
     {
@@ -101,19 +79,18 @@ const CardsPage: NextPage = () => {
     },
     { enabled: dataFetched }
   );
-  // console.log(dataFetched);
   return (
     <CardsLayout>
       <h1>Welcome on card grid page</h1>
-      <button onClick={() => setDataFetched((old) => !old)}>
+      <Button onClick={() => setDataFetched((old) => !old)}>
         Click Me To {dataFetched ? "Hide" : "Reveal"} Cards
-      </button>
+      </Button>
       <div className="cardsGrid">
         {typeof query.cardsSlug === "string" &&
           query.cardsSlug?.split(",").map((cardSlug: string, i) => (
             <div className="cardPlaceholder" key={cardSlug}>
               <Zoom
-                in={dataFetched}
+                in={!isLoading && dataFetched}
                 style={{
                   transitionDelay: dataFetched ? `${i * 4}00ms` : "0ms",
                 }}
