@@ -32,7 +32,9 @@ const HomeLayout = styled.div`
 `;
 
 const Home: NextPage = () => {
-  const [searchedSlugs, setSearchedSlugs] = useState<string>("");
+  const [searchedSlugs, setSearchedSlugs] = useState<string>(
+    "marco-verratti-2021-unique-1,marco-verratti-2021-rare-1"
+  );
   const { push } = useRouter();
   return (
     <HomeLayout>
