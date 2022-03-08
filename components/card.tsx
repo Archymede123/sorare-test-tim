@@ -65,14 +65,20 @@ const Card = ({ card }: TCardProps) => {
   if (!card)
     return (
       <p
-        className="placeholderLabel"
-        style={{ transform: "translateX(50%)", width: "50%" }}
+        className=""
+        style={{
+          height: "400px",
+          display: "flex",
+          alignItems: "center",
+          padding: "1rem",
+          textAlign: "center",
+        }}
       >
         ERROR : Could not find player associated to this slug
       </p>
     );
   return (
-    <CardLayout key={card.id}>
+    <CardLayout>
       <div className="cardContent">
         <p className="playerName">{card.player.matchName}</p>
         <p className="playerDetails">{card.position}</p>

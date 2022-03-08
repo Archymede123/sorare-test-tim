@@ -71,7 +71,7 @@ const CardsPage: NextPage = () => {
   const [dataFetched, setDataFetched] = useState<boolean>(false);
   const { query } = useRouter();
   const { data, isLoading } = useGQLQuery(
-    "cards",
+    ["cards", query.cardsSlug],
     GET_CARDS,
     {
       slugs:
@@ -79,6 +79,9 @@ const CardsPage: NextPage = () => {
     },
     { enabled: dataFetched }
   );
+
+  console.log(data);
+  console.log(query);
   return (
     <CardsLayout>
       <h1>Welcome on card grid page</h1>
@@ -92,7 +95,7 @@ const CardsPage: NextPage = () => {
               <Zoom
                 in={!isLoading && dataFetched}
                 style={{
-                  transitionDelay: dataFetched ? `${i * 4}00ms` : "0ms",
+                  transitionDelay: dataFetched ? `${i * 4 + 1}00ms` : "0ms",
                 }}
               >
                 <div>

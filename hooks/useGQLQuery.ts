@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { GraphQLClient } from "graphql-request";
 
 export const useGQLQuery = (
-  key: string,
+  key: any[] | string,
   query: any,
   variables: any,
   config = {}
